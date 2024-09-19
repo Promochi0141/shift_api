@@ -34,9 +34,9 @@ class ShiftController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Shift $shift)
+    public function show($student_id)
     {
-        //
+
     }
 
     /**
