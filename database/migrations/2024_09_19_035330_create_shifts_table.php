@@ -13,11 +13,12 @@ return new class extends Migration {
     {
         Schema::create('shifts', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_id');
+            $table->string('student_id');
             $table->unsignedBigInteger('details_id'); // details_idカラムを追加
             $table->foreign('details_id')->references('id')->on('details');
             $table->time('start_time');
             $table->time('end_time');
+            $table->timestamps();
         });
     }
 

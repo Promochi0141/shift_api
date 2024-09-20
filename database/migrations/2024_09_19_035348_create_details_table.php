@@ -12,9 +12,10 @@ return new class extends Migration {
     {
         Schema::create('details', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 200);
-            $table->string('url', 200);
-            $table->string('place', 200);
+            $table->string('name');
+            $table->string('url');
+            $table->string('place');
+            $table->timestamps();
         });
     }
 
