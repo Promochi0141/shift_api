@@ -14,10 +14,25 @@ class DetailSeeder extends Seeder
      */
     public function run(): void
     {
-        $detail = Detail::create([
+        $detail1 = Detail::create([
             'name' => 'test_name',
             'url' => 'test_url',
             'place' => 'test_place',
+        ]);
+        $detail2 = Detail::create([
+            'name' => 'test_name2',
+            'url' => 'test_url2',
+            'place' => 'test_place2',
+        ]);
+        $detail3 = Detail::create([
+            'name' => 'test_name3',
+            'url' => 'test_url3',
+            'place' => 'test_place3',
+        ]);
+        $detail4 = Detail::create([
+            'name' => 'test_name4',
+            'url' => 'test_url4',
+            'place' => 'test_place4',
         ]);
     }
 }
