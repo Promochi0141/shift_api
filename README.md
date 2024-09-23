@@ -6,13 +6,14 @@ Windwows 上で Herd をインストールしていることを前提として�
 
 ```shell-session
 cd ~/Herd
-git clone <このレポジトリのURL>
+git clone git@github.com:s-union/shift_api.git
 cd <クローンしたディレクトリ名>
 composer install
 cp .env.example .env
+touch /database/databese.sqlite
 php artisan key:generate
 php artisan migrate:fresh
-php artisan db:seeder
+php artisan db:seed
 ```
 
 # 注意事項
