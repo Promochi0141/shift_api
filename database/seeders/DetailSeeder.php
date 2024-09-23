@@ -14,7 +14,7 @@ class DetailSeeder extends Seeder
      */
     public function run(): void
     {
-        $detail = Detail::create([
+        $detail1 = Detail::create([
             'name' => 'test_name',
             'url' => 'test_url',
             'place' => 'test_place',
