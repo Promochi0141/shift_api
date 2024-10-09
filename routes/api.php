@@ -18,7 +18,4 @@ Route::get('/hello', [MyAuthController::class, 'hello'])->middleware('auth:sanct
 
 Route::controller(MyAuthController::class)->group(function () {
     Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('logout', 'logout');
-    Route::post('refresh', 'refresh');
 });

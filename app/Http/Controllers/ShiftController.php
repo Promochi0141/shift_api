@@ -32,6 +32,8 @@ class ShiftController extends Controller
     {
         try {
             $shifts = $request->all();
+            $date = $shifts[0]['date'];
+            Shift::where('date', $date)->delete();
             foreach ($shifts as $shift) {
                 Shift::create([
                     'student_id' => $shift['student_id'],
@@ -41,7 +43,7 @@ class ShiftController extends Controller
                     'end_time' => $shift['end_time'],
                 ]);
             }
-            return response()->json(['message' => 'Shifts saved'], 200);
+            return response()->json(['message' => 'データが保存されました'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         } finally {
