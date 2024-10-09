@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Shift;
 use App\Models\Detail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ShiftController extends Controller
 {
@@ -29,7 +30,23 @@ class ShiftController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $shifts = $request->all();
+            foreach ($shifts as $shift) {
+                Shift::create([
+                    'student_id' => $shift['student_id'],
+                    'details_id' => $shift['details_id'],
+                    'date' => $shift['date'],
+                    'start_time' => $shift['start_time'],
+                    'end_time' => $shift['end_time'],
+                ]);
+            }
+            return response()->json(['message' => 'Shifts saved'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        } finally {
+            $request->user()->currentAccessToken()->delete();
+        }
     }
 
     /**
