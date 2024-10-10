@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Detail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DetailController extends Controller
 {
@@ -28,7 +29,27 @@ class DetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $details = $request->all();
+            // detailsテーブルのデータを、id=0を除き全削除
+            Detail::where('id', '!=', 0)->delete();
+            foreach ($details as $detail) {
+                Detail::create([
+                    'id' => $detail['id'],
+                    'name' => $detail['name'],
+                    'url' => $detail['url'],
+                    'place' => $detail['place'],
+                ]);
+            }
+            DB::commit();
+            return response()->json(['message' => 'データが保存されました'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        } finally {
+            $request->user()->currentAccessToken()->delete();
+        }
     }
 
     /**

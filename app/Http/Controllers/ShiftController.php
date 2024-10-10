@@ -30,6 +30,7 @@ class ShiftController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try {
             $shifts = $request->all();
             $date = $shifts[0]['date'];
@@ -43,8 +44,10 @@ class ShiftController extends Controller
                     'end_time' => $shift['end_time'],
                 ]);
             }
+            DB::commit();
             return response()->json(['message' => 'データが保存されました'], 200);
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         } finally {
             $request->user()->currentAccessToken()->delete();
@@ -56,10 +59,20 @@ class ShiftController extends Controller
      */
     public function show($student_id)
     {
-
-        $shifts = Shift::join('details', 'shifts.details_id', '=', 'details.id')
+        $shifts = Shift::leftJoin('details', 'shifts.details_id', '=', 'details.id')
             ->where('student_id', $student_id)
             ->get();
+
+        // $shiftsのうち、$shifts->nameがnullならば、$shifts->nameに'登録されていないシフト'を代入
+
+        foreach ($shifts as $shift) {
+            if ($shift->name === null) {
+                $shift->name = 'シフト情報が未登録';
+                $shift->url = '/';
+                $shift->place = '未登録';
+            }
+        }
+
         if ($shifts->isEmpty()) {
             return response()->json(['message' => 'No_shifts_found'], 404);
         } else {

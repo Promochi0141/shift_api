@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\MyAuthController;
+use App\Http\Controllers\DetailController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -12,6 +13,8 @@ use App\Http\Controllers\MyAuthController;
 Route::get('/shift/{student_id}', [ShiftController::class, 'show']);
 
 Route::post('/shift_csv', [ShiftController::class, 'store'])->middleware('auth:sanctum');
+
+Route::post('/details_csv', [DetailController::class, 'store'])->middleware('auth:sanctum');
 
 Route::get('/hello', [MyAuthController::class, 'hello'])->middleware('auth:sanctum');
 

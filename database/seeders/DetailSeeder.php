@@ -14,6 +14,13 @@ class DetailSeeder extends Seeder
      */
     public function run(): void
     {
+        $detail0 =
+            Detail::create([
+                'id' => 0,
+                'name' => '登録されていないシフト',
+                'url' => '/',
+                'place' => '未登録',
+            ]);
         $detail1 = Detail::create([
             'name' => 'test_name',
             'url' => 'test_url',

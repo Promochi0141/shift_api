@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Detail extends Model
 {
-    protected $fillable = ['name', 'url', 'place'];
+    protected $fillable = ['id', 'name', 'url', 'place'];
     protected $hidden = ['created_at', 'updated_at'];
 
 
